@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>يارا 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --black:#1A1A1A;
+    --pink:#E7A6C6;
+    --brown:#8A6552;
+    --lightblue:#A9D6E8;
+    --darkblue:#1E3A5F;
+    --darkbrown:#4A2E28;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Tajawal', sans-serif;
+    background:var(--white);
+    color:var(--black);
+    overflow-x:hidden;
+  }
+  h1,h2,.display{
+    font-family:'Aref Ruqaa', serif;
+  }
+
+  /* ---- overlay (tap to start) ---- */
+  #overlay{
+    position:fixed;inset:0;z-index:999;
+    background:linear-gradient(160deg,var(--darkblue),var(--darkbrown));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--white);text-align:center;padding:24px;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #overlay.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #overlay h1{font-size:clamp(2rem,7vw,3.2rem);margin-bottom:16px;}
+  #overlay p{font-size:1.05rem;opacity:.85;margin-bottom:28px;max-width:420px;}
+  #startBtn{
+    background:var(--pink);color:var(--darkbrown);border:none;
+    padding:16px 40px;border-radius:40px;font-family:'Tajawal';
+    font-size:1.1rem;font-weight:700;cursor:pointer;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
+    transition:transform .25s ease;
+  }
+  #startBtn:hover{transform:scale(1.05);}
+
+  section{
+    padding:90px 24px;
+    max-width:720px;
+    margin:0 auto;
+  }
+
+  /* ---- hero ---- */
+  #hero{
+    min-height:90vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    background:radial-gradient(circle at 50% 20%, #fbeaf1 0%, var(--white) 60%);
+  }
+  #hero .display{font-size:clamp(3rem,12vw,5.5rem);color:var(--darkblue);line-height:1;}
+  #hero p{margin-top:22px;font-size:1.15rem;line-height:1.9;max-width:480px;color:var(--brown);}
+
+  .divider{
+    height:6px;width:90px;border-radius:6px;
+    background:linear-gradient(90deg,var(--pink),var(--lightblue));
+    margin:36px auto;
+  }
+
+  /* ---- favorites ---- */
+  #favorites{background:var(--darkblue);color:var(--white);border-radius:0;}
+  #favorites h2{color:var(--pink);font-size:2.2rem;margin-bottom:8px;text-align:center;}
+  #favorites .sub{text-align:center;opacity:.75;margin-bottom:40px;}
+
+  .swatches{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:48px;}
+  .swatch{width:52px;height:52px;border-radius:50%;border:3px solid rgba(255,255,255,.35);}
+
+  .foods{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+  .food-card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:18px;padding:28px 22px;text-align:center;width:200px;
+  }
+  .food-card .emoji{font-size:2.4rem;margin-bottom:10px;display:block;}
+  .food-card h3{font-family:'Tajawal';font-weight:700;margin-bottom:6px;}
+  .food-card p{font-size:.9rem;opacity:.75;}
+
+  /* ---- game ---- */
+  #game h2{color:var(--darkbrown);text-align:center;font-size:2.2rem;}
+  #game .sub{text-align:center;color:var(--brown);margin-bottom:28px;}
+  #gameBox{
+    position:relative;
+    height:380px;border-radius:20px;overflow:hidden;
+    background:linear-gradient(180deg,#fdf3f7,#f3f8fb);
+    border:2px dashed var(--pink);
+  }
+  .falling{
+    position:absolute;top:-40px;
+    width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Aref Ruqaa';font-size:1.5rem;font-weight:700;
+    color:var(--white);cursor:pointer;user-select:none;
+    background:var(--lightblue);
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+  }
+  .falling.target{background:var(--darkblue);}
+  #progress{
+    display:flex;justify-content:center;gap:14px;margin-top:20px;
+  }
+  .slot{
+    width:44px;height:44px;border-radius:10px;border:2px solid var(--pink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Aref Ruqaa';font-size:1.4rem;color:var(--darkbrown);
+  }
+  .slot.filled{background:var(--pink);color:var(--white);border-color:var(--pink);}
+  #gameMsg{text-align:center;margin-top:16px;color:var(--darkblue);font-weight:700;min-height:24px;}
+
+  /* ---- keyboard section ---- */
+  #confess{background:#fbeaf1;border-radius:0;}
+  #confess h2{text-align:center;color:var(--darkbrown);font-size:2.1rem;margin-bottom:6px;}
+  #confess .sub{text-align:center;color:var(--brown);margin-bottom:30px;}
+  #answerBox{
+    background:var(--white);border:2px solid var(--pink);border-radius:14px;
+    min-height:56px;display:flex;align-items:center;justify-content:center;
+    font-family:'Aref Ruqaa';font-size:1.6rem;color:var(--darkblue);
+    padding:0 16px;margin-bottom:20px;letter-spacing:2px;
+  }
+  #keyboard{
+    display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-bottom:20px;
+  }
+  .key{
+    background:var(--white);border:1px solid var(--lightblue);border-radius:8px;
+    padding:10px 0;text-align:center;cursor:pointer;font-family:'Tajawal';
+    font-size:1rem;transition:background .15s ease;
+  }
+  .key:hover{background:var(--lightblue);color:var(--white);}
+  .key.wide{grid-column:span 2;}
+  #confessBtns{display:flex;gap:12px;justify-content:center;}
+  .btn{
+    border:none;border-radius:30px;padding:12px 28px;font-family:'Tajawal';
+    font-weight:700;cursor:pointer;font-size:1rem;
+  }
+  .btn.primary{background:var(--darkblue);color:var(--white);}
+  .btn.ghost{background:transparent;color:var(--darkbrown);border:2px solid var(--darkbrown);}
+  #confessResult{text-align:center;margin-top:22px;font-size:1.1rem;color:var(--darkblue);min-height:28px;}
+
+  /* ---- closing ---- */
+  #closing{text-align:center;padding-bottom:120px;}
+  #closing h2{color:var(--pink);font-size:2rem;margin-bottom:18px;}
+  #closing p{color:var(--brown);line-height:2;max-width:480px;margin:0 auto;font-size:1.05rem;}
+  #closing .sign{margin-top:26px;font-family:'Aref Ruqaa';font-size:1.6rem;color:var(--darkblue);}
+
+  .heart{position:fixed;bottom:-40px;font-size:1.4rem;pointer-events:none;z-index:5;animation:rise 4s linear forwards;}
+  @keyframes rise{to{transform:translateY(-100vh) rotate(20deg);opacity:0;}}
+
+  @media(max-width:480px){
+    #keyboard{grid-template-columns:repeat(6,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<audio id="bgAudio" src="song.mp3" loop></audio>
+
+<div id="overlay">
+  <h1 class="display">يارا 💗</h1>
+  <p>في حاجة حلوة مستنياكي هنا... دوسي علشان تبدأ</p>
+  <button id="startBtn">ادخلي هنا</button>
+</div>
+
+<section id="hero">
+  <h1 class="display">يارا</h1>
+  <p>من يومين بس، حاسس إن الدنيا اتغيرت شكلها.<br>
+  عملتلك المكان الصغير ده، عشان اقولك عليه حاجات مش بتتقال بسهولة.</p>
+  <div class="divider"></div>
+</section>
+
+<section id="favorites">
+  <h2>حاجاتك</h2>
+  <p class="sub">اللي بتحبيها، بقيت أحبها أنا كمان</p>
+  <div class="swatches">
+    <div class="swatch" style="background:#FFFFFF;border-color:#ddd;"></div>
+    <div class="swatch" style="background:#1A1A1A;"></div>
+    <div class="swatch" style="background:#E7A6C6;"></div>
+    <div class="swatch" style="background:#8A6552;"></div>
+    <div class="swatch" style="background:#A9D6E8;"></div>
+    <div class="swatch" style="background:#1E3A5F;"></div>
+    <div class="swatch" style="background:#4A2E28;"></div>
+  </div>
+  <div class="foods">
+    <div class="food-card">
+      <span class="emoji">🍝</span>
+      <h3>مكرونة بشاميل</h3>
+      <p>الأكلة اللي مفيش عليها كلام</p>
+    </div>
+    <div class="food-card">
+      <span class="emoji">🍃</span>
+      <h3>ورق عنب</h3>
+      <p>لفة لفة وكله بحب</p>
+    </div>
+  </div>
+</section>
+
+<section id="game">
+  <h2>العبي تجمعي اسمي</h2>
+  <p class="sub">دوسي على الحروف الصح بالترتيب: ح ← س ← ن</p>
+  <div id="gameBox"></div>
+  <div id="progress">
+    <div class="slot" id="slot0">ح</div>
+    <div class="slot" id="slot1">س</div>
+    <div class="slot" id="slot2">ن</div>
+  </div>
+  <div id="gameMsg"></div>
+</section>
+
+<section id="confess">
+  <h2>سؤال واحد بس</h2>
+  <p class="sub">بصراحة... مين أكتر واحد بتحبيه؟ 🤍</p>
+  <div id="answerBox">&nbsp;</div>
+  <div id="keyboard"></div>
+  <div id="confessBtns">
+    <button class="btn ghost" id="clearBtn">امسحي</button>
+    <button class="btn primary" id="sendBtn">ابعتي</button>
+  </div>
+  <div id="confessResult"></div>
+</section>
+
+<section id="closing">
+  <h2>آخر كلمة</h2>
+  <p>
+    مش عايز أضغط عليكي ولا أستعجلك في حاجة.<br>
+    بس عايزك تعرفي إن في حد بقى ينتظر رسايلك بشكل غريب،<br>
+    وبيبقى يومه أحلى من مجرد "صباح الخير" بسيطة منك.<br>
+    خدي وقتك، وأنا هنا.
+  </p>
+  <div class="sign">— حسن</div>
+</section>
+
+<script>
+  // ---- start / audio ----
+  const overlay = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
+  const audio = document.getElementById('bgAudio');
+
+  // try autoplay quietly, fall back to the tap overlay if blocked
+  audio.volume = 0.85;
+  const tryAutoplay = audio.play();
+  if (tryAutoplay !== undefined){
+    tryAutoplay.then(()=>{ overlay.classList.add('hidden'); }).catch(()=>{ /* wait for tap */ });
+  }
+  startBtn.addEventListener('click', ()=>{
+    audio.play().catch(()=>{});
+    overlay.classList.add('hidden');
+  });
+
+  // ---- floating hearts ambience ----
+  setInterval(()=>{
+    const h = document.createElement('div');
+    h.className='heart';
+    h.style.left = Math.random()*100+'vw';
+    h.textContent = ['🤍','💗','🩶'][Math.floor(Math.random()*3)];
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4200);
+  },1400);
+
+  // ---- game: collect ح س ن in order ----
+  const target = ['ح','س','ن'];
+  let progress = 0;
+  const decoys = ['ي','ا','ر','م','ل','ط','ق'];
+  const box = document.getElementById('gameBox');
+  const msg = document.getElementById('gameMsg');
+  let gameWon = false;
+
+  function spawnLetter(){
+    if(gameWon) return;
+    const isTarget = Math.random() < 0.4 && progress < 3;
+    const letter = isTarget ? target[progress] : decoys[Math.floor(Math.random()*decoys.length)];
+    const el = document.createElement('div');
+    el.className = 'falling' + (isTarget ? ' target':'');
+    el.textContent = letter;
+    el.style.left = (10 + Math.random()*75) + '%';
+    box.appendChild(el);
+
+    const duration = 3800 + Math.random()*1200;
+    el.animate([{transform:'translateY(-40px)'},{transform:'translateY(400px)'}],{duration, easing:'linear'});
+    const timeout = setTimeout(()=>el.remove(), duration);
+
+    el.addEventListener('click', ()=>{
+      clearTimeout(timeout);
+      if(letter === target[progress] && !gameWon){
+        document.getElementById('slot'+progress).classList.add('filled');
+        progress++;
+        el.remove();
+        if(progress === 3){
+          gameWon = true;
+          msg.textContent = '🎉 جمعتي اسمي بالكامل! يارا وحسن.. حلوة أوي شكل الاسمين مع بعض';
+        }
+      } else if (!gameWon) {
+        el.style.transition='opacity .2s';
+        el.style.opacity=0;
+        setTimeout(()=>el.remove(),200);
+      }
+    });
+  }
+  const spawner = setInterval(()=>{ if(!gameWon) spawnLetter(); }, 750);
+
+  // ---- virtual keyboard confession ----
+  const arabicLetters = ['ا','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي'];
+  const kb = document.getElementById('keyboard');
+  const answerBox = document.getElementById('answerBox');
+  let typed = '';
+
+  arabicLetters.forEach(ch=>{
+    const k = document.createElement('div');
+    k.className='key';
+    k.textContent = ch;
+    k.addEventListener('click', ()=>{ typed += ch; renderAnswer(); });
+    kb.appendChild(k);
+  });
+  const spaceKey = document.createElement('div');
+  spaceKey.className='key wide';
+  spaceKey.textContent='مسافة';
+  spaceKey.addEventListener('click', ()=>{ typed += ' '; renderAnswer(); });
+  kb.appendChild(spaceKey);
+
+  const delKey = document.createElement('div');
+  delKey.className='key wide';
+  delKey.textContent='⌫';
+  delKey.addEventListener('click', ()=>{ typed = typed.slice(0,-1); renderAnswer(); });
+  kb.appendChild(delKey);
+
+  function renderAnswer(){
+    answerBox.textContent = typed || '\u00A0';
+  }
+
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    typed=''; renderAnswer();
+    document.getElementById('confessResult').textContent='';
+  });
+
+  document.getElementById('sendBtn').addEventListener('click', ()=>{
+    const result = document.getElementById('confessResult');
+    const clean = typed.trim();
+    if(clean === 'حسن' || clean === 'حسن ' ){
+      result.textContent = '💙 يارا... القلب بيدق دلوقتي أد إيه!';
+    } else if(clean === ''){
+      result.textContent = 'اكتبي حاجة الأول 🙂';
+    } else {
+      result.textContent = 'أكيد فيه حد تاني في بالك؟ جربي تاني... 😉';
+    }
+  });
+</script>
+
+</body>
+</html>

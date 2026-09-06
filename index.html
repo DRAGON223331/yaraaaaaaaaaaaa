@@ -20,8 +20,8 @@
   html{scroll-behavior:smooth;}
   body{
     font-family:'Tajawal', sans-serif;
-    background:var(--white);
-    color:var(--black);
+    background:#151515;
+    color:var(--white);
     overflow-x:hidden;
   }
   h1,h2,.display{
@@ -59,10 +59,10 @@
     min-height:90vh;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
-    background:radial-gradient(circle at 50% 20%, #fbeaf1 0%, var(--white) 60%);
+    background:radial-gradient(circle at 50% 20%, #2a2030 0%, #151515 60%);
   }
-  #hero .display{font-size:clamp(3rem,12vw,5.5rem);color:var(--darkblue);line-height:1;}
-  #hero p{margin-top:22px;font-size:1.15rem;line-height:1.9;max-width:480px;color:var(--brown);}
+  #hero .display{font-size:clamp(3rem,12vw,5.5rem);color:var(--lightblue);line-height:1;}
+  #hero p{margin-top:22px;font-size:1.15rem;line-height:1.9;max-width:480px;color:#d8c3b0;}
 
   .divider{
     height:6px;width:90px;border-radius:6px;
@@ -89,12 +89,12 @@
   .food-card p{font-size:.9rem;opacity:.75;}
 
   /* ---- game ---- */
-  #game h2{color:var(--darkbrown);text-align:center;font-size:2.2rem;}
-  #game .sub{text-align:center;color:var(--brown);margin-bottom:28px;}
+  #game h2{color:var(--pink);text-align:center;font-size:2.2rem;}
+  #game .sub{text-align:center;color:#c7b3a8;margin-bottom:28px;}
   #gameBox{
     position:relative;
     height:380px;border-radius:20px;overflow:hidden;
-    background:linear-gradient(180deg,#fdf3f7,#f3f8fb);
+    background:linear-gradient(180deg,#241c22,#1c2530);
     border:2px dashed var(--pink);
   }
   .falling{
@@ -113,30 +113,30 @@
   .slot{
     width:44px;height:44px;border-radius:10px;border:2px solid var(--pink);
     display:flex;align-items:center;justify-content:center;
-    font-family:'Aref Ruqaa';font-size:1.4rem;color:var(--darkbrown);
+    font-family:'Aref Ruqaa';font-size:1.4rem;color:#e8d9cf;
   }
-  .slot.filled{background:var(--pink);color:var(--white);border-color:var(--pink);}
-  #gameMsg{text-align:center;margin-top:16px;color:var(--darkblue);font-weight:700;min-height:24px;}
+  .slot.filled{background:var(--pink);color:var(--darkbrown);border-color:var(--pink);}
+  #gameMsg{text-align:center;margin-top:16px;color:var(--lightblue);font-weight:700;min-height:24px;}
 
   /* ---- keyboard section ---- */
-  #confess{background:#fbeaf1;border-radius:0;}
-  #confess h2{text-align:center;color:var(--darkbrown);font-size:2.1rem;margin-bottom:6px;}
-  #confess .sub{text-align:center;color:var(--brown);margin-bottom:30px;}
+  #confess{background:#241a20;border-radius:0;}
+  #confess h2{text-align:center;color:var(--pink);font-size:2.1rem;margin-bottom:6px;}
+  #confess .sub{text-align:center;color:#cbb3a5;margin-bottom:30px;}
   #answerBox{
-    background:var(--white);border:2px solid var(--pink);border-radius:14px;
+    background:#1a1418;border:2px solid var(--pink);border-radius:14px;
     min-height:56px;display:flex;align-items:center;justify-content:center;
-    font-family:'Aref Ruqaa';font-size:1.6rem;color:var(--darkblue);
+    font-family:'Aref Ruqaa';font-size:1.6rem;color:var(--lightblue);
     padding:0 16px;margin-bottom:20px;letter-spacing:2px;
   }
   #keyboard{
     display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-bottom:20px;
   }
   .key{
-    background:var(--white);border:1px solid var(--lightblue);border-radius:8px;
+    background:#1a1418;border:1px solid var(--lightblue);border-radius:8px;
     padding:10px 0;text-align:center;cursor:pointer;font-family:'Tajawal';
-    font-size:1rem;transition:background .15s ease;
+    font-size:1rem;color:var(--white);transition:background .15s ease;
   }
-  .key:hover{background:var(--lightblue);color:var(--white);}
+  .key:hover{background:var(--lightblue);color:var(--darkbrown);}
   .key.wide{grid-column:span 2;}
   #confessBtns{display:flex;gap:12px;justify-content:center;}
   .btn{
@@ -144,14 +144,14 @@
     font-weight:700;cursor:pointer;font-size:1rem;
   }
   .btn.primary{background:var(--darkblue);color:var(--white);}
-  .btn.ghost{background:transparent;color:var(--darkbrown);border:2px solid var(--darkbrown);}
-  #confessResult{text-align:center;margin-top:22px;font-size:1.1rem;color:var(--darkblue);min-height:28px;}
+  .btn.ghost{background:transparent;color:var(--white);border:2px solid var(--lightblue);}
+  #confessResult{text-align:center;margin-top:22px;font-size:1.1rem;color:var(--lightblue);min-height:28px;}
 
   /* ---- closing ---- */
   #closing{text-align:center;padding-bottom:120px;}
   #closing h2{color:var(--pink);font-size:2rem;margin-bottom:18px;}
-  #closing p{color:var(--brown);line-height:2;max-width:480px;margin:0 auto;font-size:1.05rem;}
-  #closing .sign{margin-top:26px;font-family:'Aref Ruqaa';font-size:1.6rem;color:var(--darkblue);}
+  #closing p{color:#d8c3b0;line-height:2;max-width:480px;margin:0 auto;font-size:1.05rem;}
+  #closing .sign{margin-top:26px;font-family:'Aref Ruqaa';font-size:1.6rem;color:var(--lightblue);}
 
   .heart{position:fixed;bottom:-40px;font-size:1.4rem;pointer-events:none;z-index:5;animation:rise 4s linear forwards;}
   @keyframes rise{to{transform:translateY(-100vh) rotate(20deg);opacity:0;}}
